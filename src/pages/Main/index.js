@@ -16,7 +16,7 @@ import {
   ProductAmountText,
 } from './styles';
 
-export default class Home extends Component {
+export default class Main extends Component {
   state = {
     products: [],
   };
@@ -62,6 +62,6 @@ export default class Home extends Component {
   }
 }
 
-Home.navigationOptions = {
-  title: 'Home',
+Main.navigationOptions = {
+  title: 'Main',
 };
