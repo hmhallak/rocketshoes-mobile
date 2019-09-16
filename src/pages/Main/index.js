@@ -42,44 +42,55 @@ class Main extends Component {
     addToCart(product);
   };
 
+  renderProduct = ({ item }) => {
+    const { amount } = this.props;
+    return (
+      <Product>
+        <ProductImage source={{ uri: item.image }} />
+        <ProductTitle>{item.title}</ProductTitle>
+        <ProductPrice>{item.priceFormatted}</ProductPrice>
+
+        <AddButton onPress={() => this.handleAddProduct(item)}>
+          <ProductAmount>
+            <Icon name="add-shopping-cart" size={20} color="#FFF" />
+            <ProductAmountText>{amount[item.id] || 0}</ProductAmountText>
+          </ProductAmount>
+
+          <AddButtonText>ADICIONAR</AddButtonText>
+        </AddButton>
+      </Product>
+    );
+  };
+
   render() {
     const { products } = this.state;
+
     return (
       <Container>
         <FlatList
           horizontal
           data={products}
+          extraData={this.props}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => (
-            <Product>
-              <ProductImage source={{ uri: item.image }} />
-              <ProductTitle>{item.title}</ProductTitle>
-              <ProductPrice>{item.priceFormatted}</ProductPrice>
-
-              <AddButton onPress={() => this.handleAddProduct(item)}>
-                <ProductAmount>
-                  <Icon name="add-shopping-cart" size={20} color="#FFF" />
-                  <ProductAmountText>0</ProductAmountText>
-                </ProductAmount>
-
-                <AddButtonText>ADICIONAR</AddButtonText>
-              </AddButton>
-            </Product>
-          )}
+          renderItem={this.renderProduct}
         />
       </Container>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, product) => {
+    amount[product.id] = product.amount;
+    console.tron.log(amount[product.id]);
+    return amount;
+  }, {}),
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Main);
-
-Main.navigationOptions = {
-  title: 'Main',
-};
