@@ -32,7 +32,7 @@ import {
 } from './styles';
 import colors from '../../styles/colors';
 
-function Cart({ navigation, products, removeFromCart, updateAmount }) {
+function Cart({ navigation, products, total, removeFromCart, updateAmount }) {
   function increment(product) {
     updateAmount(product.id, product.amount + 1);
   }
@@ -84,7 +84,7 @@ function Cart({ navigation, products, removeFromCart, updateAmount }) {
             ))}
             <TotalContainer>
               <TotalText>TOTAL</TotalText>
-              <TotalAmount>R$199,90</TotalAmount>
+              <TotalAmount>{total}</TotalAmount>
               <Order>
                 <OrderText>FINALIZAR PEDIDO</OrderText>
               </Order>
