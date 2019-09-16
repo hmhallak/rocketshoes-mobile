@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { dispatch } from 'rxjs/internal/observable/range';
 import { formatPrice } from '../../util/format';
 
 import {
@@ -29,7 +30,7 @@ import {
 } from './styles';
 import colors from '../../styles/colors';
 
-function Cart({ navigation, products, cartSize }) {
+function Cart({ navigation, products, dispatch, cartSize }) {
   return (
     <Container>
       {products.length ? (
@@ -43,7 +44,11 @@ function Cart({ navigation, products, cartSize }) {
                     <ProductTitle>{product.title}</ProductTitle>
                     <ProductPrice>{product.priceFormatted}</ProductPrice>
                   </ProductDetails>
-                  <ProductDelete onPress={() => {}}>
+                  <ProductDelete
+                    onPress={() =>
+                      dispatch({ type: 'REMOVE_FROM_CART', id: product.id })
+                    }
+                  >
                     <Icon
                       name="delete-forever"
                       size={24}
