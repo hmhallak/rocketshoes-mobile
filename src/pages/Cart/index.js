@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { dispatch } from 'rxjs/internal/observable/range';
 import { formatPrice } from '../../util/format';
 
 import * as CartActions from '../../store/modules/cart/actions';
